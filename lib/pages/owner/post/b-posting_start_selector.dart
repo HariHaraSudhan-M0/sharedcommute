@@ -3,7 +3,7 @@ import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:sharedcommute/models/ownerPostModel.dart';
 import 'package:sharedcommute/pages/LoginPage.dart';
-import 'package:sharedcommute/pages/owner/c-poting_end_selector.dart';
+import 'package:sharedcommute/pages/owner/post/c-poting_end_selector.dart';
 
 class OwnerStartSelector extends StatefulWidget {
   final OwnerPostModel postData;

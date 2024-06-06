@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sharedcommute/features/splash_screen/splashscreen.dart';
+import 'package:sharedcommute/features/splash_screen/tripPostedScreen.dart';
 import 'package:sharedcommute/pages/Homepage.dart';
 import 'package:sharedcommute/pages/LoginPage.dart';
 import 'package:sharedcommute/pages/SignUpPage.dart';
-import 'package:sharedcommute/pages/owner/a-postingPage.dart';
-import 'package:sharedcommute/pages/owner/b-posting_start_selector.dart';
+import 'package:sharedcommute/pages/owner/owner_onboard.dart';
+import 'package:sharedcommute/pages/owner/post/a-postingPage.dart';
+import 'package:sharedcommute/pages/owner/post/b-posting_start_selector.dart';
+import 'package:sharedcommute/pages/passenger/trip_list_page.dart';
 import 'firebase_options.dart';
 // ignore: depend_on_referenced_packages
 
@@ -39,7 +42,8 @@ if (user != null){
         '/login': (context) => const LoginPage(),
         '/signUp': (context) => const SignUpPage(),
         '/home': (context) => const HomePage(),
-        '/ownerPostPage': (context) =>  OwnerPostPage(),
+        '/ownerPostPage': (context) =>  OwnerOnboard(),
+        '/tripList': (context) => TripListPage(),
       },
     );
   }

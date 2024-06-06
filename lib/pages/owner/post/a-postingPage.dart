@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sharedcommute/models/ownerPostModel.dart';
-import 'package:sharedcommute/pages/owner/b-posting_start_selector.dart';
-
+import 'package:sharedcommute/pages/owner/post/b-posting_start_selector.dart';
+import 'package:sharedcommute/widgets/textWidget.dart';
 
 class OwnerPostPage extends StatefulWidget {
   @override
@@ -48,21 +48,7 @@ class _OwnerPostPage extends State<OwnerPostPage> with SingleTickerProviderState
           ),
         );  }
 
-  Widget _buildAnimatedTextField(String label, TextEditingController controller) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +61,11 @@ class _OwnerPostPage extends State<OwnerPostPage> with SingleTickerProviderState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildAnimatedTextField('License Number', _licenseController),
+            buildAnimatedTextField('License Number', _licenseController),
             SizedBox(height: 16),
-            _buildAnimatedTextField('Vehicle Number', _vehicleController),
+            buildAnimatedTextField('Vehicle Number', _vehicleController),
             SizedBox(height: 16),
-            _buildAnimatedTextField('Phone Number', _phoneController),
+            buildAnimatedTextField('Phone Number', _phoneController),
             SizedBox(height: 32),
             ElevatedButton(
               onPressed: _onNextButtonPressed,

@@ -10,6 +10,7 @@ Future<String?> fetchCity(GeoPoint point) async {
     final jsonResponse = json.decode(response.body);
     final address = jsonResponse['address'];
     final city = address['city'] ?? address['town'] ?? address['village'];
+    print(city);
     return city;
   } else {
     throw Exception('Failed to load data');

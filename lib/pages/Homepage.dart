@@ -63,6 +63,7 @@ class HomePage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: (){
+                Navigator.pushNamed(context, "/tripList");
               },
               child: Container(
                 width: double.infinity,

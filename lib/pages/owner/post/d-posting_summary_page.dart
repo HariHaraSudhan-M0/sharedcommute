@@ -1,7 +1,11 @@
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:sharedcommute/features/splash_screen/tripPostedScreen.dart';
 import 'package:sharedcommute/models/ownerPostModel.dart';
 import 'package:sharedcommute/utils/get_city.dart';
 
@@ -17,6 +21,8 @@ class PostSummary extends StatefulWidget {
 class _PostSummaryState extends State<PostSummary> {
   @override
   late MapController mapController;
+  bool summarised = false;
+  DatabaseReference ref = FirebaseDatabase.instance.ref("trips");
   String _toCity = "";
   String _fromCity = "";
   _summarise() async {
@@ -39,11 +45,49 @@ class _PostSummaryState extends State<PostSummary> {
         ));
 
     String? fromCity = await fetchCity(widget.postData.start!);
-    String? toCity = await fetchCity(widget.postData.start!);
+    String? toCity = await fetchCity(widget.postData.end!);
+    print("FROM: $fromCity TO: $toCity");
     setState(() {
       _toCity = toCity!;
       _fromCity = fromCity!;
     });
+    summarised = true;
+  }
+
+  _postTrip() {
+    if (summarised) {
+      print("Posting trip ");
+      DatabaseReference tripListRef = ref.push();
+      tripListRef.set({
+        "User": FirebaseAuth.instance.currentUser!.uid ,
+        "UserName": widget.postData.userName,
+        "LicenceName": widget.postData.licence_number,
+        "VehicleNmae": widget.postData.vehicle_number,
+        "phoneNumber": widget.postData.phone_number,
+        "seats": 6,
+        "from":  {
+          "city":_fromCity,
+          "lat": widget.postData.start!.latitude,
+          "lon": widget.postData.start!.longitude
+        },
+        "to":  {
+          "city":_toCity,
+          "lat": widget.postData.end!.latitude,
+          "lon": widget.postData.end!.longitude
+        }
+      });
+    } else {
+      const snackBar = SnackBar(
+        content: Text('Summarise your trip first!!'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TripSplashScreen(splashText: "Your Trip has been posted !!"),
+          ),
+        );
   }
 
   @override
@@ -100,6 +144,8 @@ class _PostSummaryState extends State<PostSummary> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [Text("FROM:  $_fromCity"), Text("TO:  $_toCity")],
           ),
+          ElevatedButton(onPressed: _postTrip, child: const Text("Post trip")),
+
           const Spacer(),
           // Container at the bottom covering half of the screen
           Container(
