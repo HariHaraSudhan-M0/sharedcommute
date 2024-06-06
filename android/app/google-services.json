@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "992859453355",
+    "project_id": "shared-commute-adec7",
+    "storage_bucket": "shared-commute-adec7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992859453355:android:ca0127667654242b9a04ee",
+        "android_client_info": {
+          "package_name": "com.example.sharedcommute"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeamssP2jYGW5ugI9T1Vi8OAl01totGGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
