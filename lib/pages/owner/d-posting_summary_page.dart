@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:sharedcommute/models/ownerPostModel.dart';
+import 'package:sharedcommute/utils/get_city.dart';
 
 class PostSummary extends StatefulWidget {
   final OwnerPostModel postData;
@@ -18,6 +19,33 @@ class _PostSummaryState extends State<PostSummary> {
   late MapController mapController;
   String _toCity = "";
   String _fromCity = "";
+  _summarise() async {
+    mapController.addMarker(
+        widget.postData.start ?? GeoPoint(latitude: 0, longitude: 0),
+        markerIcon: const MarkerIcon(
+          icon: Icon(
+            Icons.flag,
+            color: Colors.green,
+          ),
+        ));
+
+    mapController.addMarker(
+        widget.postData.end ?? GeoPoint(latitude: 0, longitude: 0),
+        markerIcon: const MarkerIcon(
+          icon: Icon(
+            Icons.flag,
+            color: Colors.red,
+          ),
+        ));
+
+    String? fromCity = await fetchCity(widget.postData.start!);
+    String? toCity = await fetchCity(widget.postData.start!);
+    setState(() {
+      _toCity = toCity!;
+      _fromCity = fromCity!;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -27,14 +55,13 @@ class _PostSummaryState extends State<PostSummary> {
       enableTracking: true,
       unFollowUser: false,
     ));
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Information'),
+        title: const Text('User Information'),
       ),
       body: Column(
         children: [
@@ -46,54 +73,41 @@ class _PostSummaryState extends State<PostSummary> {
               children: [
                 Text(
                   'Name: ${widget.postData.userName}',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   'License Number: ${widget.postData.licence_number}',
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   'Vehicle Number: ${widget.postData.vehicle_number}',
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   'Phone Number: ${widget.postData.phone_number}',
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
               ],
             ),
           ),
-          Spacer(),
-          ElevatedButton(onPressed: (){
-            mapController.addMarker(
-              widget.postData.start ?? GeoPoint(latitude: 0, longitude: 0),
-              markerIcon: MarkerIcon(
-                icon: Icon(
-                  Icons.flag,
-                  color: Colors.green,
-                ),
-              ));
-
-          mapController.addMarker(
-              widget.postData.end ?? GeoPoint(latitude: 0, longitude: 0),
-              markerIcon: MarkerIcon(
-                icon: Icon(
-                  Icons.flag,
-                  color: Colors.red,
-                ),
-              ));
-          }, child: Text("Summarise")),
-          Spacer(),
+          const Spacer(),
+          ElevatedButton(onPressed: _summarise, child: const Text("Summarise")),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [Text("FROM:  $_fromCity"), Text("TO:  $_toCity")],
+          ),
+          const Spacer(),
           // Container at the bottom covering half of the screen
           Container(
             height: MediaQuery.of(context).size.height * 0.5,
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.yellow,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30),
                 topRight: Radius.circular(30),
               ),
@@ -112,11 +126,11 @@ class _PostSummaryState extends State<PostSummary> {
                         );
                       },
                     ),
-                    Text("Loading your trip")
+                    const Text("Loading your trip")
                   ]),
               controller: mapController,
-              osmOption: OSMOption(
-                zoomOption: const ZoomOption(
+              osmOption: const OSMOption(
+                zoomOption: ZoomOption(
                   initZoom: 5,
                   minZoomLevel: 3,
                   maxZoomLevel: 19,
