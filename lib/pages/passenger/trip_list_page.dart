@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:sharedcommute/pages/passenger/payment_page.dart';
 import 'package:sharedcommute/pages/passenger/trip_detail.dart';
 import 'package:sharedcommute/utils/get_trip_list.dart';
 
@@ -38,6 +39,12 @@ class _TripListPageState extends State<TripListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('User List'),
+        actions: [IconButton(onPressed: (){                     Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PaymentPage(),
+                          ),
+                        );}, icon: Icon(Icons.payment))],
       ),
       body: FutureBuilder<List<Trip>>(
         future: _tripFuture,

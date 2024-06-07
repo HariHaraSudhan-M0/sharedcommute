@@ -75,7 +75,7 @@ class HomePage extends StatelessWidget {
                 ),
                 child: const Center(
                   child: Text(
-                    'RIDER',
+                    'PASSENGER',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

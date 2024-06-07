@@ -9,7 +9,7 @@ class OwnerOnboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Rider"),
+        title: Text("Owner"),
       ),
       body: Center(
         child: Column(
